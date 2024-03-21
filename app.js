@@ -66,8 +66,9 @@ function hungerDecay() {
   updateAnimals() // draw the data
   drawPaycheck()
 }
+
 // REVIEW to make code run on it's own, on a repeating interval
-setInterval(hungerDecay, 1000)
+let hungerInterval = setInterval(hungerDecay, 1000)
 
 
 function updateAnimals() {
@@ -80,6 +81,9 @@ function updateAnimals() {
     let statsElm = animalPenElm.querySelector('h5')
     // console.log('📈', statsElm);
     statsElm.innerText = `${animal.name} | ${animal.status} | ${animal.hunger}`
+    let buttonElm = animalPenElm.querySelector('button')
+    buttonElm.innerHTML = `$${animal.upgradeCost} 
+    <i class="mdi mdi-upload-box"></i> lv ${animal.foodQuality} [ 🍖${animal.foodQuality * 5}]`
 
     // stop marquees
     if (animal.hunger <= 0) {
@@ -92,6 +96,7 @@ function updateAnimals() {
     }
   })
 }
+updateAnimals()
 
 function updateAnimalStatuses() {
   animals.forEach(animal => {
@@ -132,6 +137,7 @@ function upgradeFood(animalName) {
     animalToUpgrade.upgradeCost += 50
     console.log('upgarded!', animalToUpgrade.foodQuality)
     drawBank()
+    updateAnimals()
   }
 }
 
